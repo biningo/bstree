@@ -108,7 +108,7 @@ func (tree *BSTree) Get(item interface{}) (interface{}, bool) {
 	return node.item, true
 }
 
-//Exist whether a node exists
+//Exist return true if item exist
 func (tree *BSTree) Exist(item interface{}) bool {
 	_, flag := tree.find(item)
 	return flag
@@ -149,4 +149,81 @@ func (tree *BSTree) Del(item interface{}) bool {
 		pre.rightChild = child
 	}
 	return true
+}
+
+//Max find max item
+func (tree *BSTree) Max() interface{} {
+	node := tree.root
+	for node != nil {
+		if node.rightChild == nil {
+			return node.item
+		}
+		node = node.rightChild
+	}
+	return nil
+}
+
+//Min find min item
+func (tree *BSTree) Min() interface{} {
+	node := tree.root
+	for node != nil {
+		if node.leftChild == nil {
+			return node.item
+		}
+		node = node.leftChild
+	}
+	return nil
+}
+
+// Scan the tree by order
+// Return false to stop
+func (tree *BSTree) Scan(handler func(item interface{}) bool) {
+	if handler == nil {
+		return
+	}
+	stack := []*node{}
+	node := tree.root
+	for node != nil {
+		stack = append(stack, node)
+		node = node.leftChild
+	}
+
+	for len(stack) > 0 {
+		node, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		if flag := handler(node.item); flag == false {
+			return
+		}
+		node = node.rightChild
+		for node != nil {
+			stack = append(stack, node)
+			node = node.leftChild
+		}
+	}
+}
+
+//Range scan the tree within the range [start,end]
+func (tree *BSTree) Range(start, end interface{}, handler func(item interface{}) bool) {
+	if handler == nil {
+		return
+	}
+	stack := []*node{}
+	node := tree.root
+	for node != nil {
+		stack = append(stack, node)
+		node = node.leftChild
+	}
+
+	for len(stack) > 0 {
+		node, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		if tree.comp(start, node.item) <= 0 && tree.comp(end, node.item) >= 0 {
+			if flag := handler(node.item); flag == false {
+				return
+			}
+		}
+		node = node.rightChild
+		for node != nil {
+			stack = append(stack, node)
+			node = node.leftChild
+		}
+	}
 }
