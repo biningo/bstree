@@ -13,7 +13,7 @@ type node struct {
 type BSTree struct {
 	root   *node
 	length int                        //number of nodes
-	comp   func(a, b interface{}) int //comparison function -1 0 1 < = >
+	comp   func(a, b interface{}) int //comparison function <0 0 >0 < = >
 }
 
 func newNode(item interface{}) *node {
@@ -211,6 +211,10 @@ func (tree *BSTree) Range(start, end interface{}, handler func(item interface{})
 	for node != nil {
 		stack = append(stack, node)
 		node = node.leftChild
+		if node != nil && tree.comp(start, node.item) > 0 {
+			stack = append(stack, node)
+			break
+		}
 	}
 
 	for len(stack) > 0 {
@@ -224,6 +228,10 @@ func (tree *BSTree) Range(start, end interface{}, handler func(item interface{})
 		for node != nil {
 			stack = append(stack, node)
 			node = node.leftChild
+			if node != nil && tree.comp(start, node.item) > 0 {
+				stack = append(stack, node)
+				break
+			}
 		}
 	}
 }
