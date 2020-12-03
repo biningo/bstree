@@ -66,4 +66,36 @@ func main() {
 		return true
 	})
 	log.Println(arrKey)
+
+	//key
+	tree2 := bstree.NewBSTree(func(a, b interface{}) int {
+		key, ok := a.(int)
+		item := b.(Item)
+		if !ok {
+			key2 := a.(Item)
+			return key2.Key - item.Key
+		}
+		return key - item.Key
+	})
+
+	tree2.Set(Item{5, "five"})
+	tree2.Set(Item{3, "three"})
+	tree2.Set(Item{7, "seven"})
+	tree2.Set(Item{4, "four"})
+	tree2.Set(Item{6, "six"})
+	log.Println("----------------------tree2------------")
+	tree2.Scan(func(item interface{}) bool {
+		i := item.(Item)
+		log.Println(i.Key, i.Val)
+		return true
+	})
+	log.Println("----------------------")
+	tree2.Range(4, 6, func(item interface{}) bool {
+		i := item.(Item)
+		log.Println(i.Key, i.Val)
+		return true
+	})
+
+	m := tree2.Max().(Item)
+	log.Println(m.Key)
 }
