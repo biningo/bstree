@@ -25,10 +25,10 @@ jobs:
         run: |
           go get -v -t -d ./...
 
-      - name: Lint Go Code
-          run: |
-            go get -u golang.org/x/lint/golint
-            golint ./
+      - name: Intsall Golangci-lint
+          run: curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b . latest
+      - name: Lint
+          run: ./golangci-lint run ./...
 
       - name: Test
         run: go test -v .
