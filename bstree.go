@@ -76,10 +76,12 @@ func (tree *BSTree) findNodeAndParent(item interface{}) (pre *node, cur *node) {
 func (tree *BSTree) Set(item interface{}) {
 	if tree.root == nil {
 		tree.root = newNode(item)
+		tree.length = 1
 		return
 	}
 	cur := tree.root
 	comp := tree.comp
+	tree.length++
 	for cur != nil {
 		t := comp(item, cur.item)
 		if t < 0 {
@@ -133,6 +135,7 @@ func (tree *BSTree) Del(item interface{}) bool {
 			right_min = right_min.leftChild
 		}
 		pre = right_min_pre
+		cur.item, right_min.item = right_min.item, cur.item
 		cur = right_min
 	}
 	var child *node
@@ -148,6 +151,7 @@ func (tree *BSTree) Del(item interface{}) bool {
 	} else if pre.rightChild == cur {
 		pre.rightChild = child
 	}
+	tree.length--
 	return true
 }
 
