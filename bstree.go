@@ -10,6 +10,7 @@ type node struct {
 	rightChild *node
 }
 
+//BSTree is an ordered set items
 type BSTree struct {
 	root   *node
 	length int                        //number of nodes
@@ -123,20 +124,20 @@ func (tree *BSTree) Del(item interface{}) bool {
 		return false
 	}
 
-	var right_min *node
-	var right_min_pre *node
+	var rightMin *node
+	var rightMinPre *node
 
 	//Converts to only right subtrees or no child nodes
 	if cur.leftChild != nil && cur.rightChild != nil {
-		right_min_pre = cur
-		right_min = cur.rightChild
-		for right_min.leftChild != nil {
-			right_min_pre = right_min
-			right_min = right_min.leftChild
+		rightMinPre = cur
+		rightMin = cur.rightChild
+		for rightMin.leftChild != nil {
+			rightMinPre = rightMin
+			rightMin = rightMin.leftChild
 		}
-		pre = right_min_pre
-		cur.item, right_min.item = right_min.item, cur.item
-		cur = right_min
+		pre = rightMinPre
+		cur.item, rightMin.item = rightMin.item, cur.item
+		cur = rightMin
 	}
 	var child *node
 	if cur.leftChild != nil {
