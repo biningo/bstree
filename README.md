@@ -2,7 +2,7 @@
 
 [![GoDoc](https://godoc.org/github.com/biningo/bstree?status.svg)](https://godoc.org/github.com/biningo/bstree)
 
-An efficient and simple [Binary Search Tree](https://en.wikipedia.org/wiki/Binary_search_tree) implementation in Go. 
+An efficient and simple [Binary Search Tree](https://pkg.go.dev/github.com/biningo/bstree) implementation in Go. 
 
 ## Installing
 
