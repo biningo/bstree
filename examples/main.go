@@ -1,13 +1,16 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/biningo/bstree"
+)
 
 /**
 *@Author icepan
 *@Date 2020/12/2 下午4:04
 *@Describe
 **/
-import "github.com/biningo/bstree"
 
 type Item struct {
 	Key int
